@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'pages/cart_screen.dart';
 import 'pages/home_screen.dart';
 import 'pages/components/cart_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,14 +22,22 @@ class ChurrosApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.red.shade400,
-          elevation: 0,
+        primaryColor: Colors.red.shade600,
+        secondaryHeaderColor: Colors.orange.shade400,
+        scaffoldBackgroundColor: Colors.red.shade50, // Light red background
+        textTheme: TextTheme(
+          displayLarge: GoogleFonts.poppins(
+            color: Colors.white, // Adjust text color for better contrast
+          ),
+          displayMedium: GoogleFonts.poppins(
+            color: Colors.black87,
+          ),
         ),
-        scaffoldBackgroundColor: Colors.white,
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.orange.shade400, // Buttons matching the churros theme
+        ),
       ),
+
       home: MainNavigation(),
     );
   }
@@ -64,9 +71,9 @@ class _MainNavigationState extends State<MainNavigation> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.brown,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'News'),
+          BottomNavigationBarItem(icon: Icon(Icons.location_city_sharp), label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),

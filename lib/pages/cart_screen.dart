@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../custom_appbar.dart';
 import 'components/cart_provider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -7,23 +8,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        backgroundColor: Colors.red.shade400,
-        elevation: 3,
-        title: Text(
-          'Your Cart',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: 'Your Cart'),
       body: cart.cartItems.isEmpty
           ? _buildEmptyCart()
           : ListView.builder(
