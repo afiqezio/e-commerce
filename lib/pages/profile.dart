@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../custom_appbar.dart';
+
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red.shade400,
-        elevation: 3,
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: 'Profile'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -26,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
               // Profile Picture
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/profile_placeholder.png'), // Add your profile image
+                backgroundImage: AssetImage('assets/john.jpg'),
                 backgroundColor: Colors.grey.shade300,
               ),
               SizedBox(height: 20),
@@ -77,7 +67,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Text(
                   'Edit Profile',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.white)
+                  ,
                 ),
               ),
               SizedBox(height: 15),
