@@ -30,6 +30,10 @@ environment:
 dependencies:
   google_fonts:
   provider:
+  flutter_map:
+  geolocator:
+  latlong2:
+  permission_handler:
   flutter:
     sdk: flutter
 

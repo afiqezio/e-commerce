@@ -3,7 +3,7 @@ import 'pages/home_screen.dart';
 import 'pages/components/cart_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'pages/news.dart';
+import 'pages/location.dart';
 import 'pages/profile.dart';
 
 void main() {
@@ -54,7 +54,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    NewsScreen(),
+    NearestShopPage(),
     ProfileScreen(),
   ];
   @override
