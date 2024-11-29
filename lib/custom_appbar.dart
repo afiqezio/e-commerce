@@ -51,14 +51,28 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2.0, 2.0), // Position of the shadow (x, y)
+                        blurRadius: 4.0,          // Blurriness of the shadow
+                        color: Colors.black.withOpacity(0.6), // Color of the shadow
+                      ),
+                    ],
                   ),
                 ),
+
                 // Row to include Cart and Notification Icons
                 Row(
                   children: [
                     // Notification Icon
                     IconButton(
-                      icon: Icon(Icons.notifications, color: Colors.white),
+                      icon: Icon(Icons.notifications, color: Colors.white, shadows: [
+                          Shadow(
+                          offset: Offset(2.0, 2.0),
+                      blurRadius: 4.0,
+                      color: Colors.black.withOpacity(0.4),
+                    ),
+                  ],),
                       onPressed: () {
                         // Navigate to NewsScreen when notification icon is tapped
                         Navigator.push(
@@ -78,6 +92,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 Icons.shopping_cart_outlined,
                                 color: Colors.white,
                                 size: 28,
+                                shadows: [
+                                  Shadow(
+                                    offset: Offset(2.0, 2.0),
+                                    blurRadius: 4.0,
+                                    color: Colors.black.withOpacity(0.4),
+                                  ),
+                                ],
                               ),
                               onPressed: () {
                                 Navigator.push(
