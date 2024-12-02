@@ -1,12 +1,12 @@
 class Order {
-  final int orderId;
-  final DateTime orderDate;
+  final String orderId;
+  final DateTime createdDate;
   final double totalAmount;
   final String userId;
 
   Order({
     required this.orderId,
-    required this.orderDate,
+    required this.createdDate,
     required this.totalAmount,
     required this.userId,
   });
@@ -15,7 +15,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       orderId: json['orderId'],
-      orderDate: json['orderDate'],
+      createdDate: json['orderDate'],
       totalAmount: json['totalAmount'],
       userId: json['userId'],
     );
@@ -25,7 +25,7 @@ class Order {
   Map<String, dynamic> toJson() {
     return {
       'orderId': orderId,
-      'orderDate': orderDate,
+      'orderDate': createdDate,
       'totalAmount': totalAmount,
       'userId': userId,
     };

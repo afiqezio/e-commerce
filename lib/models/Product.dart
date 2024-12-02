@@ -4,13 +4,15 @@ class Product {
   final String description;
   final double price;
   final String? imageUrl;
+  final String? categoryId;
 
   Product({
     required this.productId,
     required this.name,
     required this.description,
     required this.price,
-    required this.imageUrl,
+    this.imageUrl,
+    this.categoryId,
   });
 
   // Factory method to create Product from JSON
@@ -21,6 +23,7 @@ class Product {
       description: json['description'] as String,
       price: json['price'] as double,
       imageUrl: json['imageUrl'] as String?,
+      categoryId: json['categoryId'] as String
     );
   }
 
@@ -32,6 +35,7 @@ class Product {
       'description': description,
       'price': price,
       'imageUrl': imageUrl,
+      'categoryId': categoryId,
     };
   }
 }

@@ -4,9 +4,9 @@ class User {
   final String email;
   final String password;
   final String? phone;
+  final String? address;
   final String? imageUrl;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final int? role;
 
   User({
     this.userID,
@@ -14,9 +14,9 @@ class User {
     required this.email,
     required this.password,
     this.phone,
+    this.address,
     this.imageUrl,
-    this.createdAt,
-    this.updatedAt,
+    this.role,
   });
 
   // Factory method to create a User object from JSON data
@@ -27,9 +27,9 @@ class User {
       email: json['email'],
       password: json['passwordHash'],
       phone: json['phone'],
+      address: json['address'],
       imageUrl: json['imageUrl'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      role: json['role']
     );
   }
 
@@ -41,9 +41,9 @@ class User {
       'email': email,
       'passwordHash': password,
       'phone': phone,
+      'address': address,
       'imageUrl': imageUrl,
-      'createdAt': createdAt!.toIso8601String(),
-      'updatedAt': updatedAt!.toIso8601String(),
+      'role': 1
     };
   }
 }
