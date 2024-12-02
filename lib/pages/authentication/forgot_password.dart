@@ -1,44 +1,37 @@
-import 'package:churros/pages/authentication/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../main.dart';
-import 'auth_service.dart';
-import 'forgot_password.dart';
 
-class LoginPage extends StatefulWidget {
+import 'login.dart';
+
+class ForgotPasswordPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool _isLoading = false;
-  String? _errorMessage;
+  String? _message;
 
-  final AuthService _authService = AuthService();
-
-  Future<void> _login() async {
+  Future<void> _sendResetLink() async {
     setState(() {
       _isLoading = true;
-      _errorMessage = null;
+      _message = null;
     });
 
     final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
 
     try {
-      final token = await _authService.login(email, password);
+      // Call your forgot password logic here.
+      // Simulate reset password delay.
+      await Future.delayed(Duration(seconds: 2));
 
-      if (token != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainNavigation()),
-        );
-      }
+      setState(() {
+        _message = "A password reset link has been sent to $email.";
+      });
     } catch (e) {
       setState(() {
-        _errorMessage = e.toString();
+        _message = "Failed to send reset link. Please try again.";
       });
     } finally {
       setState(() {
@@ -74,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'Mr. Churros',
+                        'Reset your password',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                           fontSize: 28,
@@ -90,15 +83,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: 16),
-                      if (_errorMessage != null)
-                        Text(
-                          _errorMessage!,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      SizedBox(height: 16),
                       TextField(
                         controller: _emailController,
                         decoration: InputDecoration(
@@ -112,25 +96,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                       ),
-                      SizedBox(height: 16),
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          filled: true,
-                          fillColor: Colors.red.shade50,
-                          prefixIcon: Icon(Icons.lock, color: Colors.red),
-                        ),
-                        obscureText: true,
-                      ),
                       SizedBox(height: 24),
                       _isLoading
                           ? Center(child: CircularProgressIndicator())
                           : ElevatedButton(
-                        onPressed: _login,
+                        onPressed: _sendResetLink,
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
@@ -139,40 +109,23 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: Colors.brown.shade700,
                         ),
                         child: const Text(
-                          'Login',
+                          'Send Reset Link',
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       ),
                       SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
-                              );
-                            },
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(color: Colors.red.shade700),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => RegisterPage()),
-                              );
-                            },
-                            child: Text(
-                              'Register',
-                              style: TextStyle(color: Colors.red.shade700),
-                            ),
-                          ),
-                        ],
-                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage()),
+                          );
+                        },
+                        child: Text(
+                          'Back to Log In',
+                          style: TextStyle(color: Colors.red.shade700),
+                        ),
+                      )
                     ],
                   ),
                 ),
