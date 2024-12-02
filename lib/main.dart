@@ -1,3 +1,4 @@
+import 'package:churros/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'pages/home_screen.dart';
 import 'pages/components/cart_provider.dart';
@@ -9,7 +10,7 @@ import 'pages/profile.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => CartProvider(),
+      create: (context) => CartProvider(),
       child: ChurrosApp(),
     ),
   );
@@ -37,8 +38,7 @@ class ChurrosApp extends StatelessWidget {
           buttonColor: Colors.orange.shade400, // Buttons matching the churros theme
         ),
       ),
-
-      home: MainNavigation(),
+        home: SplashScreen(),
     );
   }
 }

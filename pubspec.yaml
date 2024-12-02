@@ -33,7 +33,10 @@ dependencies:
   flutter_map:
   geolocator:
   latlong2:
+  http:
+  shared_preferences:
   permission_handler:
+  flutter_secure_storage:
   flutter:
     sdk: flutter
 

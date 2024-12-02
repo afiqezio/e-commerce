@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../custom_appbar.dart';
+import 'authentication/auth_service.dart';
+import 'authentication/login.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -74,7 +76,13 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(height: 15),
               OutlinedButton(
                 onPressed: () {
-                  // Log out action
+                  final AuthService _authService = AuthService();
+                  _authService.logout();
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Colors.red.shade400),
