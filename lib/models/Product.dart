@@ -1,37 +1,37 @@
 class Product {
-  final int id;
+  final String productId;
   final String name;
   final String description;
   final double price;
-  final int shopId;
+  final String? imageUrl;
 
   Product({
-    required this.id,
+    required this.productId,
     required this.name,
     required this.description,
     required this.price,
-    required this.shopId,
+    required this.imageUrl,
   });
 
   // Factory method to create Product from JSON
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      price: json['price'].toDouble(),
-      shopId: json['shopId'],
+      productId: json['productID'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String,
+      price: json['price'] as double,
+      imageUrl: json['imageUrl'] as String?,
     );
   }
 
   // Convert Product to JSON
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'productID': productId,
       'name': name,
       'description': description,
       'price': price,
-      'shopId': shopId,
+      'imageUrl': imageUrl,
     };
   }
 }

@@ -26,9 +26,11 @@ class AuthService {
         // Extract the token from the response
         final data = jsonDecode(response.body);
         final token = data['token'];
+        final userId = data['userID'];
 
-        // Save the token securely
+        // Save the token and userId securely
         await _secureStorage.write(key: 'jwt_token', value: token);
+        await _secureStorage.write(key: 'userId', value: userId);
 
         return token; // Return the token for further use
       } else {

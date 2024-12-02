@@ -1,33 +1,41 @@
 class Shop {
-  final int id;
+  final String shopId;
   final String name;
-  final String location; // You can use more precise types like LatLng if needed.
-  final String contactNumber;
+  final String address;
+  final double latitude;
+  final double longitude;
+  final String? imageUrl;
 
   Shop({
-    required this.id,
+    required this.shopId,
     required this.name,
-    required this.location,
-    required this.contactNumber,
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+    required this.imageUrl,
   });
 
   // Factory method to create Shop from JSON
   factory Shop.fromJson(Map<String, dynamic> json) {
     return Shop(
-      id: json['id'],
+      shopId: json['shopId'],
       name: json['name'],
-      location: json['location'],
-      contactNumber: json['contactNumber'],
+      address: json['address'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      imageUrl: json['imageUrl'],
     );
   }
 
   // Convert Shop to JSON
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'shopId': shopId,
       'name': name,
-      'location': location,
-      'contactNumber': contactNumber,
+      'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
+      'imageUrl': imageUrl,
     };
   }
 }

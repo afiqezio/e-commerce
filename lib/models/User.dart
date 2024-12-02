@@ -3,6 +3,7 @@ class User {
   final String fullName;
   final String email;
   final String? phone;
+  final String? imageUrl;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -11,6 +12,7 @@ class User {
     required this.fullName,
     required this.email,
     this.phone,
+    this.imageUrl,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -22,6 +24,7 @@ class User {
       fullName: json['fullName'],
       email: json['email'],
       phone: json['phone'],
+      imageUrl: json['imageUrl'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
     );
@@ -34,6 +37,7 @@ class User {
       'fullName': fullName,
       'email': email,
       'phone': phone,
+      'imageUrl': imageUrl,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };

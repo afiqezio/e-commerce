@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../custom_appbar.dart';
 import 'components/cart_provider.dart';
+import '../../models/Product.dart';
 
 class CartScreen extends StatelessWidget {
   @override
@@ -55,6 +56,16 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget _buildCartItem(BuildContext context, CartProvider cart, Map<String, dynamic> item) {
+    // We assume that the item is a map with product details and quantity
+    final product = Product(
+      productId: item['productId'],
+      name: item['name'],
+      description: item['description'],
+      price: item['price'],
+      imageUrl: item['imageUrl'],
+    );
+    final quantity = item['quantity'];
+
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -64,23 +75,23 @@ class CartScreen extends StatelessWidget {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.asset(
-            item['image']!,
+            product.imageUrl!,
             width: 50,
             height: 50,
             fit: BoxFit.cover,
           ),
         ),
         title: Text(
-          item['name']!,
+          product.name,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          item['price']!,
+          '\$${product.price} x $quantity',
           style: TextStyle(color: Colors.red.shade400, fontSize: 14),
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red.shade400),
-          onPressed: () => cart.removeFromCart(item),
+          onPressed: () => cart.removeFromCart(product),
         ),
       ),
     );

@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       if (token != null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MainNavigation()), // Replace with your Home Page widget
+          MaterialPageRoute(builder: (context) => MainNavigation()),
         );
       }
     } catch (e) {
@@ -77,12 +77,12 @@ class _LoginPageState extends State<LoginPage> {
                         style: GoogleFonts.poppins(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red.shade700,
+                          color: Colors.red.shade500,
                           shadows: [
                             Shadow(
                               offset: Offset(2.0, 2.0),
                               blurRadius: 4.0,
-                              color: Colors.redAccent.withOpacity(0.5),
+                              color: Colors.redAccent.withOpacity(0.7),
                             ),
                           ],
                         ),
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (_errorMessage != null)
                         Text(
                           _errorMessage!,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
                           ),
