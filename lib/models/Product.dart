@@ -4,7 +4,8 @@ class Product {
   final String description;
   final double price;
   final String? imageUrl;
-  final String? categoryId;
+  final String categoryId;
+  final String? category; // Add nullable category field
 
   Product({
     required this.productId,
@@ -12,7 +13,8 @@ class Product {
     required this.description,
     required this.price,
     this.imageUrl,
-    this.categoryId,
+    required this.categoryId,
+    this.category,
   });
 
   // Factory method to create Product from JSON
@@ -23,7 +25,8 @@ class Product {
       description: json['description'] as String,
       price: json['price'] as double,
       imageUrl: json['imageUrl'] as String?,
-      categoryId: json['categoryId'] as String
+      categoryId: json['categoryID'] as String,
+      category: json['category'] as String?,
     );
   }
 
@@ -35,7 +38,8 @@ class Product {
       'description': description,
       'price': price,
       'imageUrl': imageUrl,
-      'categoryId': categoryId,
+      'categoryID': categoryId,
+      'category': category,
     };
   }
 }

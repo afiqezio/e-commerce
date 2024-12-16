@@ -12,17 +12,17 @@ class Shop {
     required this.address,
     required this.latitude,
     required this.longitude,
-    required this.imageUrl,
+    this.imageUrl,
   });
 
-  // Factory method to create Shop from JSON
+  // Factory method to create Shop from JSON with null safety
   factory Shop.fromJson(Map<String, dynamic> json) {
     return Shop(
-      shopId: json['shopId'],
-      name: json['name'],
-      address: json['address'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      shopId: json['shopId'] ?? '',
+      name: json['name'] ?? 'Unnamed Shop',
+      address: json['address'] ?? 'No Address',
+      latitude: json['latitude'] ?? 0.0,
+      longitude: json['longitude'] ?? 0.0,
       imageUrl: json['imageUrl'],
     );
   }

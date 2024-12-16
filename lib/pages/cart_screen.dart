@@ -63,6 +63,7 @@ class CartScreen extends StatelessWidget {
       description: item['description'],
       price: item['price'],
       imageUrl: item['imageUrl'],
+      categoryId : item['categoryId'],
     );
     final quantity = item['quantity'];
 

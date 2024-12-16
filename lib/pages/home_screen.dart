@@ -44,7 +44,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ? const Center(child: CircularProgressIndicator()) // Show loading spinner
           : Padding(
         padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
+        child: _products.isEmpty
+            ? Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.inventory_2_outlined,
+                size: 100,
+                color: Colors.grey.shade400,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'No Products Available',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        )
+            : GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 12,
@@ -52,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           itemCount: _products.length,
           itemBuilder: (context, index) {
-            return ProductCard(product: _products[index]); // Pass a single Product
+            return ProductCard(product: _products[index]);
           },
         ),
       ),

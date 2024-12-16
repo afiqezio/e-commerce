@@ -3,8 +3,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import '../controller/shop_controller.dart';
 import '../custom_appbar.dart';
+import '../models/Shop.dart';
 
 class NearestShopPage extends StatefulWidget {
   @override
@@ -13,17 +14,12 @@ class NearestShopPage extends StatefulWidget {
 
 class _NearestShopPageState extends State<NearestShopPage> {
   LatLng? _currentPosition;
-  List<Map<String, dynamic>> _shopLocations = [
-    {
-      'name': 'Churros Shop 1',
-      'location': LatLng(3.223138, 101.464610), // Example: Kuala Lumpur location
-    },
-    {
-      'name': 'Churros Shop 2',
-      'location': LatLng(3.202443, 101.488343), // Another shop location
-    },
-  ];
+  final ShopService _shopService = ShopService();
+  List<Shop> _shop = [];
+  bool _isLoading = true;
+
   late MapController _mapController;
+  Shop? _nearestShop; // Store the nearest shop
   double? _distanceToNearestShop;
 
   @override
@@ -33,7 +29,7 @@ class _NearestShopPageState extends State<NearestShopPage> {
     _getCurrentLocation();
   }
 
-  // Request location permission and get the user's current location
+// Request location permission and get the user's current location
   Future<void> _getCurrentLocation() async {
     PermissionStatus status = await Permission.location.request();
 
@@ -44,33 +40,57 @@ class _NearestShopPageState extends State<NearestShopPage> {
 
       setState(() {
         _currentPosition = LatLng(position.latitude, position.longitude);
-        _calculateNearestShop();
+        _isLoading = true;
       });
+
+      await _fetchShops();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Location permission is required")),
+        const SnackBar(content: Text("Location permission is required")),
       );
     }
   }
 
-  // Calculate the distance to the nearest shop
+  Future<void> _fetchShops() async {
+    try {
+      _shop = await _shopService.getShops();
+      setState(() {
+        _isLoading = false;
+      });
+      _calculateNearestShop(); // Calculate nearest shop after fetching
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching shops: $e')),
+      );
+    }
+  }
+
+
+  // Calculate the distance to the nearest shop and find the shop
   void _calculateNearestShop() {
     if (_currentPosition == null) return;
 
     double minDistance = double.infinity;
-    for (var shop in _shopLocations) {
+    Shop? nearestShop;
+
+    for (var shop in _shop) {
       double distance = Geolocator.distanceBetween(
         _currentPosition!.latitude,
         _currentPosition!.longitude,
-        shop['location'].latitude,
-        shop['location'].longitude,
+        shop.latitude,
+        shop.longitude,
       );
       if (distance < minDistance) {
         minDistance = distance;
+        nearestShop = shop; // Update nearest shop
       }
     }
 
     setState(() {
+      _nearestShop = nearestShop;
       _distanceToNearestShop = minDistance / 1000; // Convert to kilometers
     });
   }
@@ -79,16 +99,16 @@ class _NearestShopPageState extends State<NearestShopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Shop'),
-      body: _currentPosition == null
-          ? Center(child: CircularProgressIndicator())
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (_distanceToNearestShop != null)
+            if (_nearestShop != null && _distanceToNearestShop != null)
               Card(
-                margin: EdgeInsets.only(top: 16),
+                margin: const EdgeInsets.only(top: 16),
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -101,7 +121,7 @@ class _NearestShopPageState extends State<NearestShopPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Nearest Shop',
                         style: TextStyle(
                           fontSize: 22,
@@ -109,19 +129,19 @@ class _NearestShopPageState extends State<NearestShopPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text(
-                        'Shop: ${_shopLocations[0]['name']}',
-                        style: TextStyle(
+                        'Shop: ${_nearestShop!.name}',
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                           color: Colors.black87,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         'Distance: ${_distanceToNearestShop!.toStringAsFixed(2)} km',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black54,
                         ),
@@ -130,7 +150,7 @@ class _NearestShopPageState extends State<NearestShopPage> {
                   ),
                 ),
               ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -139,7 +159,7 @@ class _NearestShopPageState extends State<NearestShopPage> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
                     blurRadius: 10,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                 ],
                 border: Border.all(color: Colors.grey.shade300, width: 1),
@@ -167,24 +187,28 @@ class _NearestShopPageState extends State<NearestShopPage> {
                               point: _currentPosition!,
                               width: 50,
                               height: 50,
-                              child: Icon(
+                              child: const Icon(
                                 Icons.location_pin,
                                 color: Colors.brown,
                                 size: 40.0,
                               ),
                             ),
-                          ..._shopLocations.map(
-                                (shopLocation) => Marker(
-                              point: shopLocation['location'],
+                          for (var shop in _shop)
+                            Marker(
+                              point: LatLng(shop.latitude, shop.longitude),
                               width: 50,
                               height: 50,
-                              child: Icon(
-                                Icons.store,
-                                color: Colors.red,
-                                size: 40.0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _showShopDetails(shop);
+                                },
+                                child: const Icon(
+                                  Icons.store,
+                                  color: Colors.red,
+                                  size: 40.0,
+                                ),
                               ),
                             ),
-                          )
                         ],
                       ),
                     ],
@@ -195,6 +219,50 @@ class _NearestShopPageState extends State<NearestShopPage> {
           ],
         ),
       ),
+    );
+  }
+
+  // Show shop details when a marker is tapped
+  void _showShopDetails(Shop shop) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                shop.name,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                shop.address,
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 16),
+              // Use a container to limit image size
+              if (shop.imageUrl != null)
+                Container(
+                  width: double.infinity,  // Ensure the image takes the full width
+                  height: 200, // Set a fixed height for the image
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(shop.imageUrl!),
+                      fit: BoxFit.cover, // Make sure image scales properly
+                    ),
+                  ),
+                )
+              else
+                const Icon(Icons.image, size: 100, color: Colors.grey),
+            ],
+          ),
+        );
+      },
     );
   }
 }

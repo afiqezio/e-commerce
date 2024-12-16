@@ -25,6 +25,7 @@ class ShopService {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
+        print(data);
         return data.map((ShopJson) => Shop.fromJson(ShopJson)).toList();
       } else {
         throw Exception('Failed to load Shops');
