@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/Product.dart';
-import 'cart_provider.dart';
+import '../provider/cart_provider.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
 
-  const ProductCard({Key? key, required this.product}) : super(key: key);
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: Colors.brown,
@@ -84,13 +84,13 @@ class ProductCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      '\$${product.price}',
+                      'RM${product.price}',
                       style: TextStyle(
                         color: Colors.red.shade400,
                         fontSize: 14,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ElevatedButton.icon(
                       onPressed: () {
                         context.read<CartProvider>().addToCart(product);
@@ -98,13 +98,13 @@ class ProductCard extends StatelessWidget {
                           SnackBar(content: Text('${product.name} added to cart!')),
                         );
                       },
-                      icon: Icon(Icons.add_shopping_cart),
-                      label: Text('Add to Cart'),
+                      icon: const Icon(Icons.add_shopping_cart, color: Colors.white),
+                      label: const Text('Add to Cart'),
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.red.shade400,
-                        textStyle: TextStyle(fontSize: 12),
-                        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        textStyle: const TextStyle(fontSize: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                       ),
                     ),
                   ],

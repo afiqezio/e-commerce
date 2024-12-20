@@ -2,7 +2,7 @@ import 'package:churros/pages/authentication/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../main.dart';
-import 'auth_service.dart';
+import '../../controller/authentication/auth_service.dart';
 import 'forgot_password.dart';
 
 class LoginPage extends StatefulWidget {

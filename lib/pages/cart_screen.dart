@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../custom_appbar.dart';
-import 'components/cart_provider.dart';
+import 'provider/cart_provider.dart';
 import '../../models/Product.dart';
 
 class CartScreen extends StatelessWidget {

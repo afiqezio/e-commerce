@@ -1,4 +1,4 @@
-import 'package:churros/pages/authentication/auth_service.dart';
+import 'package:churros/controller/authentication/auth_service.dart';
 import 'package:churros/pages/authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';

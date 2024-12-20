@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../controller/user_controller.dart';
 import '../custom_appbar.dart';
 import '../models/User.dart';
-import 'authentication/auth_service.dart';
+import '../controller/authentication/auth_service.dart';
 import 'authentication/login.dart';
 
 class ProfileScreen extends StatefulWidget {
